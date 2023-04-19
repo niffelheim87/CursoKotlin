@@ -1,7 +1,6 @@
 package com.ompava.recyclerviewexample.adapter
 
 import android.view.View
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.ompava.recyclerviewexample.SuperHero
