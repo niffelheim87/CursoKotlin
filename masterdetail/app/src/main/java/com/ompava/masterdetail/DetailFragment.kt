@@ -1,5 +1,6 @@
 package com.ompava.masterdetail
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -13,7 +14,7 @@ import com.ompava.masterdetail.model.SuperHeroProvider
 
 private const val ARG_HERO = "ARG_HERO"
 
-class DetailFragment : Fragment() {
+class DetailFragment(val fragmentContext: Context) : Fragment() {
     private var superHeroId: Int? = null
     private var superHero: SuperHero? = null
     private var _binding: FragmentDetailBinding? = null
@@ -24,7 +25,7 @@ class DetailFragment : Fragment() {
         super.onCreate(savedInstanceState)
         arguments?.let {
             superHeroId = it.getInt(ARG_HERO, -1)
-            provider = SuperHeroProvider()
+            provider = SuperHeroProvider(fragmentContext)
             superHero = provider.getSuperHeroById(superHeroId)
         }
     }
@@ -53,7 +54,7 @@ class DetailFragment : Fragment() {
 
     companion object {
         @JvmStatic
-        fun newInstance(heroId: Int) = DetailFragment().apply {
+        fun newInstance(context: Context, heroId: Int) = DetailFragment(context).apply {
             arguments = Bundle().apply {
                 putInt(ARG_HERO, heroId)
             }

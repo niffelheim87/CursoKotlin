@@ -1,5 +1,6 @@
 package com.ompava.masterdetail
 
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.FrameLayout
@@ -26,14 +27,14 @@ class MainActivity : AppCompatActivity(), OnItemClick {
         //In the case we were in landscape we load also the DetailFragment in its container. (layoutDetail)
         if (isLandScape()){
             //We load first SuperHero
-            provider = SuperHeroProvider()
+            provider = SuperHeroProvider(binding.root.context)
             loadDetailFragment(true, provider.getFirstID())
         }
     }
 
     private fun loadRecyclerView() {
         supportFragmentManager.beginTransaction()
-            .replace(layoutList.id, ListFragment.newInstance(1))
+            .replace(layoutList.id, ListFragment.newInstance(binding.root.context,1))
             .addToBackStack(null)
             .commit()
     }
@@ -48,7 +49,7 @@ class MainActivity : AppCompatActivity(), OnItemClick {
         val id = layoutDetail?.id?:layoutList.id
 
         supportFragmentManager.beginTransaction()
-            .replace(id, DetailFragment.newInstance(heroID))
+            .replace(id, DetailFragment.newInstance(binding.root.context, heroID))
             .addToBackStack(null)
             .commit()
     }

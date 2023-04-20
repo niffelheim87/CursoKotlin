@@ -1,0 +1,58 @@
+[
+  {
+    "id": 1,
+    "superhero": "Spiderman",
+    "publisher": "Marvel",
+    "realName": "Peter Parker",  
+    "image": "spiderman.jpg"
+  },
+  {
+    "id": 2,
+    "superhero": "Daredevil",
+    "publisher": "Marvel",
+    "realName": "Matthew Michael Murdock",  
+    "image": "daredevil"
+  },
+  {
+    "id": 3,
+    "superhero": "Wolverine",
+    "publisher": "Marvel",
+    "realName": "James Howlett",  
+    "image": "wolverine"
+  },
+  {
+    "id": 4,
+    "superhero": "Thor",
+    "publisher": "Marvel",
+    "realName": "Thor Odinson",  
+    "image": "thor"
+  },
+  {
+    "id": 5,
+    "superhero": "Batman",
+    "publisher": "DC",
+    "realName": "Bruce Wayne",  
+    "image": "batman"
+  },
+  {
+    "id": 6,
+    "superhero": "Flash",
+    "publisher": "DC",
+    "realName": "Jay Garrick",  
+    "image": "flash"
+  },
+  {
+    "id": 6,
+    "superhero": "Green Lantern",
+    "publisher": "DC",
+    "realName": "Alan Scott",  
+    "image": "green_lantern"
+  },
+  {
+    "id": 7,
+    "superhero": "Wonder Woman",
+    "publisher": "DC",
+    "realName": "Princess Diana",  
+    "image": "wonder_woman"
+  }
+ ]

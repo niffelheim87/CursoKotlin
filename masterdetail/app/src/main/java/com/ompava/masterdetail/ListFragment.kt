@@ -14,7 +14,7 @@ import com.ompava.masterdetail.`interface`.OnItemClick
 import com.ompava.masterdetail.model.SuperHeroProvider
 
 
-class ListFragment : Fragment() {
+class ListFragment(private val fragmentContext: Context) : Fragment() {
 
     private var _binding: FragmentListBinding? = null
     private lateinit var provider: SuperHeroProvider
@@ -69,7 +69,7 @@ class ListFragment : Fragment() {
             columnCount <= 1 -> LinearLayoutManager(context)
             else -> GridLayoutManager(context, columnCount)
         }
-        provider = SuperHeroProvider()
+        provider = SuperHeroProvider(fragmentContext)
 
         _binding?.recyclerSuperHero?.layoutManager = layoutManager
         _binding?.recyclerSuperHero?.adapter =
@@ -83,11 +83,12 @@ class ListFragment : Fragment() {
         private const val ARG_COLUMN_COUNT = "column-count"
 
         @JvmStatic
-        fun newInstance(columnCount: Int) =
-            ListFragment().apply {
+        fun newInstance(fragmentcontext: Context, columnCount: Int) =
+            ListFragment(fragmentcontext).apply {
                 arguments = Bundle().apply {
                     putInt(ARG_COLUMN_COUNT, columnCount)
                 }
+
             }
     }
 
