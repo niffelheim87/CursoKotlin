@@ -8,7 +8,7 @@ class SuperHeroProvider {
                 "KotlinMan",
                 "Jetbrains",
                 "Omar",
-                "https://google.com/dfgfdg.jpg"
+                "https://cursokotlin.com/wp-content/uploads/2017/07/spiderman.jpg"
             ),
             SuperHero(
                 2,
@@ -68,12 +68,12 @@ class SuperHeroProvider {
             )
         )
     }
-    fun getSuperHeroById(mId: Int?):SuperHero?{
+    fun getSuperHeroById(mId: Int?): SuperHero {
         val superhero = getSuperheros().filter { superHero ->
             superHero.id==mId
         }
 
-        return  superhero[0]?:null
+        return superhero[0]
     }
 
     fun getSuperheros(): List<SuperHero>{

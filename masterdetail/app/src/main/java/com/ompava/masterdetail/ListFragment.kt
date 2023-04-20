@@ -6,25 +6,24 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ompava.masterdetail.adapter.SuperHeroAdapter
 import com.ompava.masterdetail.databinding.FragmentListBinding
 import com.ompava.masterdetail.`interface`.OnItemClick
-import com.ompava.masterdetail.model.SuperHero
 import com.ompava.masterdetail.model.SuperHeroProvider
 
 
 class ListFragment : Fragment() {
 
     private var _binding: FragmentListBinding? = null
+    private lateinit var provider: SuperHeroProvider
 
     //property that indicates if we want to view a single item list or grid list. Used on onCreateView
     private var columnCount = 2
 
     //Listener is our callback
-    var listener: OnItemClick? = null
+    private var listener: OnItemClick? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -70,19 +69,13 @@ class ListFragment : Fragment() {
             columnCount <= 1 -> LinearLayoutManager(context)
             else -> GridLayoutManager(context, columnCount)
         }
+        provider = SuperHeroProvider()
 
         _binding?.recyclerSuperHero?.layoutManager = layoutManager
         _binding?.recyclerSuperHero?.adapter =
-            SuperHeroAdapter(SuperHeroProvider.superHeroList) { superHero ->
-                onItemSelected(
-                    superHero
-                )
-            }
+            listener?.let { SuperHeroAdapter(provider.getSuperheros(), it) }
 
-    }
 
-    private fun onItemSelected(superHero: SuperHero) {
-        Toast.makeText(context, superHero.superhero, Toast.LENGTH_SHORT).show()
     }
 
     //Creating an static method to simulate factory pattern. Creates a new ListFragment, and sets countColumn param through bundle.
