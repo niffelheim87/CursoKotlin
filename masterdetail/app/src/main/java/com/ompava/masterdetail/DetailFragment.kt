@@ -1,5 +1,6 @@
 package com.ompava.masterdetail
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,7 +8,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import com.bumptech.glide.Glide
 import com.ompava.masterdetail.databinding.FragmentDetailBinding
 import com.ompava.masterdetail.model.SuperHero
 import com.ompava.masterdetail.model.SuperHeroProvider
@@ -38,16 +38,20 @@ class DetailFragment(val fragmentContext: Context) : Fragment() {
         return _binding!!.root
     }
 
+    @SuppressLint("DiscouragedApi")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        view.findViewById<TextView>(R.id.tvSuperhero).text = superHero?.superhero
-        view.findViewById<TextView>(R.id.tvRealName).text = superHero?.realName
-        view.findViewById<TextView>(R.id.tvDescription).text = superHero?.publisher
-
-        _binding?.ivPoster?.let {
-            Glide.with(it.context).load(superHero?.photo).into(_binding!!.ivPoster)
+        _binding?.tvSuperhero?.text = superHero?.superhero
+        _binding?.tvRealName?.text = superHero?.realName
+        _binding?.tvDescription?.text = superHero?.publisher
+        val imageName = superHero?.image
+        val id = view.context.resources.getIdentifier(imageName, "drawable", view.context.packageName)
+        _binding?.ivPoster?.setImageResource(id)
+        /*_binding?.ivPoster?.let {
+            Glide.with(it.context).load(superHero?.image).into(_binding!!.ivPoster)
         }
+    */
 
     }
 

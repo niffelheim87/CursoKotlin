@@ -26,8 +26,8 @@ class SuperHeroAdapter(
     override fun onBindViewHolder(holder: SuperHeroViewHolder, position: Int) {
         val item = superHeroList[position]
         holder.render(item)
-        holder.itemView.setOnClickListener { 
-            listener?.onItemClick(item)
+        holder.itemView.setOnClickListener {
+            listener.onItemClick(item)
         }
     }
 

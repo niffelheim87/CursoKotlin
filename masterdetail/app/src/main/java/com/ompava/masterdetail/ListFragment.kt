@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ompava.masterdetail.adapter.SuperHeroAdapter
@@ -14,7 +15,9 @@ import com.ompava.masterdetail.`interface`.OnItemClick
 import com.ompava.masterdetail.model.SuperHeroProvider
 
 
-class ListFragment(private val fragmentContext: Context) : Fragment() {
+class ListFragment : Fragment() {
+
+
 
     private var _binding: FragmentListBinding? = null
     private lateinit var provider: SuperHeroProvider
@@ -54,6 +57,7 @@ class ListFragment(private val fragmentContext: Context) : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+
         // Inflate the layout for this fragment
         _binding = FragmentListBinding.inflate(inflater, container, false)
 
@@ -69,7 +73,7 @@ class ListFragment(private val fragmentContext: Context) : Fragment() {
             columnCount <= 1 -> LinearLayoutManager(context)
             else -> GridLayoutManager(context, columnCount)
         }
-        provider = SuperHeroProvider(fragmentContext)
+        provider = SuperHeroProvider(requireContext())
 
         _binding?.recyclerSuperHero?.layoutManager = layoutManager
         _binding?.recyclerSuperHero?.adapter =
@@ -81,10 +85,9 @@ class ListFragment(private val fragmentContext: Context) : Fragment() {
     //Creating an static method to simulate factory pattern. Creates a new ListFragment, and sets countColumn param through bundle.
     companion object {
         private const val ARG_COLUMN_COUNT = "column-count"
-
         @JvmStatic
-        fun newInstance(fragmentcontext: Context, columnCount: Int) =
-            ListFragment(fragmentcontext).apply {
+        fun newInstance(columnCount: Int) =
+            ListFragment().apply {
                 arguments = Bundle().apply {
                     putInt(ARG_COLUMN_COUNT, columnCount)
                 }

@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity(), OnItemClick {
 
     private fun loadRecyclerView() {
         supportFragmentManager.beginTransaction()
-            .replace(layoutList.id, ListFragment.newInstance(binding.root.context,1))
+            .replace(layoutList.id, ListFragment.newInstance(1))
             .addToBackStack(null)
             .commit()
     }
