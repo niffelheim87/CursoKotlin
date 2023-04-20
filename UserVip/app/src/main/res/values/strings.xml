@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">UserVip</string>
+    <string name="bienvenido">Bienvenido %s</string>
+</resources>
