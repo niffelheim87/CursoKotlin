@@ -17,14 +17,15 @@ class DetailFragment : Fragment() {
     private var superHeroId: Int? = null
     private var superHero: SuperHero? = null
     private var _binding: FragmentDetailBinding? = null
-    private var provider: SuperHeroProvider? = null
+    private lateinit var provider: SuperHeroProvider
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
             superHeroId = it.getInt(ARG_HERO, -1)
-            superHero = provider?.getSuperHeroById(superHeroId)
+            provider = SuperHeroProvider()
+            superHero = provider.getSuperHeroById(superHeroId)
         }
     }
 
