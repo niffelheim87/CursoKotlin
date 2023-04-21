@@ -18,28 +18,28 @@ class MainActivity : AppCompatActivity() {
         checkUserValues()
     }
 
-    fun checkUserValues(){
-        if(prefs.getName().isNotEmpty()){
+    fun checkUserValues() {
+        if (prefs.getName().isNotEmpty()) {
             goToDetail()
         }
     }
 
-    fun initUI(){
-        binding.btnContinue.setOnClickListener { accesToDetail()}
+    fun initUI() {
+        binding.btnContinue.setOnClickListener { accesToDetail() }
 
     }
 
     fun accesToDetail() {
-            if(binding.etName.text.toString().isNotEmpty()){
-                 prefs.saveName(binding.etName.text.toString())
-                prefs.saveVIP(binding.cbVip.isChecked)
-                goToDetail()
-            }else {
-                    //Hacer otra cosa
-            }
+        if (binding.etName.text.toString().isNotEmpty()) {
+            prefs.saveName(binding.etName.text.toString())
+            prefs.saveVIP(binding.cbVip.isChecked)
+            goToDetail()
+        } else {
+            //Hacer otra cosa
+        }
     }
 
-    fun goToDetail(){
+    fun goToDetail() {
         startActivity(Intent(this, ResultActivity::class.java))
     }
 }
