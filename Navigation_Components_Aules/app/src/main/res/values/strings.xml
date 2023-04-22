@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Navigation Components</string>
+    <string name="drawer">Drawer</string>
+    <string name="bottom">Bottom</string>
+    <string name="options">Options</string>
+    <string name="tabs">Tabs</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="bottom_1">Bottom 1</string>
+    <string name="bottom_2">Bottom 2</string>
+    <string name="bottom_3">Bottom 3</string>
+</resources>
