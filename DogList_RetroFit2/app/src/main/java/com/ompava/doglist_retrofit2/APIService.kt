@@ -7,5 +7,5 @@ import retrofit2.http.Url
 interface APIService {
     // Metodo GET en el que le pasamos una url y devolvemos un dataclass DogResponse
     @GET
-    fun getDogsByBreeds(@Url url:String): Response<DogResponse>
+    suspend fun getDogsByBreeds(@Url url:String): Response<DogResponse>
 }
