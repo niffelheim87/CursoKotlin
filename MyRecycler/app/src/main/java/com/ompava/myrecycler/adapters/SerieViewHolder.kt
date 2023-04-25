@@ -4,7 +4,6 @@ import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.ompava.myrecycler.databinding.SerieItemBinding
 import com.ompava.myrecycler.models.Serie
-import kotlin.math.roundToInt
 
 
 class SerieViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
