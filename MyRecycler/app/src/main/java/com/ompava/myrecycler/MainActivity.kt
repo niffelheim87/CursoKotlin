@@ -6,42 +6,30 @@ import android.os.Bundle
 import com.ompava.myrecycler.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityMainBinding
+    private lateinit var binding: ActivityMainBinding // Crea una instancia de la clase ActivityMainBinding que se inicializará más adelante.
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        // Inflar el diseño de la actividad usando el enlace de datos generado
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        // Establecer la vista raíz de la actividad en la vista raíz del diseño de enlace de datos
-        setContentView(binding.root)
+        binding =
+            ActivityMainBinding.inflate(layoutInflater) // Infla el diseño ActivityMainBinding.
+        setContentView(binding.root) // Establece la vista raíz del diseño como la vista de contenido de la actividad.
 
-        // Obtener la orientación actual de la pantalla
-        val currentOrientation = resources.configuration.orientation
-
-        // Si la orientación es horizontal (paisaje), crear y mostrar dos fragmentos (lista y detalle)
-        if (currentOrientation == Configuration.ORIENTATION_LANDSCAPE) {
-            // Crear dos fragmentos
-            val listSerieFragment = ListSerie()
-            val detailsSerieFragment = DetailsSerie()
-            // Reemplazar los contenedores de fragmentos en el diseño con los fragmentos creados
-            supportFragmentManager.beginTransaction().apply {
-                replace(R.id.containerList, listSerieFragment)
-                replace(R.id.containerDetail, detailsSerieFragment)
-                commit()
+        val listSerieFragment = ListSerie() // Crea una instancia del fragmento ListSerie.
+        supportFragmentManager.beginTransaction().apply { // Inicia una transacción de fragmento.
+            replace(
+                R.id.containerList,
+                listSerieFragment
+            ) // Reemplaza el contenido del contenedor de fragmentos "containerList" con el fragmento ListSerie.
+            if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) { // Verifica si la orientación de la pantalla es horizontal.
+                val detailsSerieFragment =
+                    DetailsSerie() // Si es así, crea una instancia del fragmento DetailsSerie.
+                replace(
+                    R.id.containerDetail,
+                    detailsSerieFragment
+                ) // Reemplaza el contenido del contenedor de fragmentos "containerDetail" con el fragmento DetailsSerie.
             }
-
-        } else {  // Si la orientación es vertical (retrato), crear y mostrar solo un fragmento (lista)
-            // Crear un fragmento
-            val listSerieFragment = ListSerie()
-            // Reemplazar el contenedor de fragmentos en el diseño con el fragmento creado
-            supportFragmentManager.beginTransaction().apply {
-                replace(R.id.containerList, listSerieFragment)
-                commit()
-            }
-
+            commit() // Confirma la transacción de fragmento.
         }
-
-
     }
-
-
 }
+
+

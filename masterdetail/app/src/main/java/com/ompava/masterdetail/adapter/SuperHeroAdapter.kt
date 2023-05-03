@@ -14,10 +14,17 @@ class SuperHeroAdapter(
     RecyclerView.Adapter<SuperHeroViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SuperHeroViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        return SuperHeroViewHolder(
+        return  if (viewType == 0 ) SuperHeroViewHolder(
             layoutInflater.inflate(R.layout.fragment_item, parent, false),
             listener
+        ) else SuperHeroViewHolder(
+            layoutInflater.inflate(R.layout.fragment_item2, parent, false),
+            listener
         )
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return if (position % 2== 0) 0 else 1
     }
 
     override fun getItemCount(): Int = superHeroList.size
@@ -26,9 +33,9 @@ class SuperHeroAdapter(
     override fun onBindViewHolder(holder: SuperHeroViewHolder, position: Int) {
         val item = superHeroList[position]
         holder.render(item)
-        holder.itemView.setOnClickListener {
-            listener.onItemClick(item)
-        }
+        //holder.itemView.setOnClickListener {
+        //    listener.onItemClick(item)
+        //}
     }
 
 }

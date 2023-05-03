@@ -17,9 +17,13 @@ class MainActivity : AppCompatActivity(), OnItemClick {
     private val layoutDetail:FrameLayout? by lazy { findViewById(R.id.containerDetail) }
     private lateinit var provider: SuperHeroProvider
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+
+
+        super.onCreate(null)
+
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
 
         //Load ListFragment on its container. (layoutList)
         loadRecyclerView()

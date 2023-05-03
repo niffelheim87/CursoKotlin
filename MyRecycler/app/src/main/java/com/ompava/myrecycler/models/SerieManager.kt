@@ -34,8 +34,8 @@ class SerieManager(context: Context) {
         return SerieList
     }
 
-    fun getFirstID(): Int {
-        return getSeries()[0].id
+    fun getFirst(): Serie {
+        return getSeries()[0]
     }
 
     fun addSerie(serie: Serie) {

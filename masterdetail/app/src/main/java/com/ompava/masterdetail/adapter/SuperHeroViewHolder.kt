@@ -23,6 +23,10 @@ class SuperHeroViewHolder(view: View, private var listener: OnItemClick) :
         val id = context.resources.getIdentifier(imageName, "drawable", context.packageName)
         binding.ivPoster.setImageResource(id)
         //Glide.with(binding.ivPoster.context).load(superHeroModel.photo).into(binding.ivPoster)
+        //binding.root.tag = superHeroModel
+        binding.root.setOnClickListener{
+            listener.onItemClick(superHeroModel)
+        }
     }
 
     override fun toString(): String {
