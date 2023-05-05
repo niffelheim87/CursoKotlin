@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity() {
             ) // Reemplaza el contenido del contenedor de fragmentos "containerList" con el fragmento ListSerie.
             if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) { // Verifica si la orientación de la pantalla es horizontal.
                 val detailsSerieFragment =
-                    DetailsSerie() // Si es así, crea una instancia del fragmento DetailsSerie.
+                    DetailSerie() // Si es así, crea una instancia del fragmento DetailsSerie.
                 replace(
                     R.id.containerDetail,
                     detailsSerieFragment

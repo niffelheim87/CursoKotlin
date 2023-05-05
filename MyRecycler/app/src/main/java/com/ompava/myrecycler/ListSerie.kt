@@ -15,42 +15,46 @@ import com.ompava.myrecycler.databinding.SerieListBinding
 import com.ompava.myrecycler.models.Serie
 import com.ompava.myrecycler.models.SerieManager
 
+private const val ARG_POSITION = "position"
 
 class ListSerie : Fragment() {
     // Declaramos, binding y serieManager como propiedades como propiedad de la clase
     private lateinit var serieAdapter: SerieAdapter
     private lateinit var binding: SerieListBinding
     private lateinit var serieManager: SerieManager
-    private var currentPosition: Int = -1
+    private var position: Int? = null
+    var bundle: Bundle? = null
+    var detailFragment: DetailSerie? = null
 
     // Definimos un listener que se encargará de manejar el evento onItemClick del adapter
     val listener = object : OnItemClickListener {
         override fun onItemClick(serie: Serie) {
             // Obtenemos la posición de la serie que se ha pulsado y mostramos un Toast
-            val position = getPosition(serie)
-            currentPosition = position
+            position = getPosition(serie)
             val currentOrientation = resources.configuration.orientation
-            val bundle = Bundle()
-            bundle.putInt("position", position)
+            bundle = Bundle().apply {
+                putInt("position", position!!)
+            }
+            Log.d("Bundle Value", "Bundle toma el valor por listener de: " + bundle?.getInt("position").toString())
 
-            val fragment = DetailsSerie()
-            fragment.arguments = bundle
-            val toastText = "Clicked on ${serieManager.getSeries()[position].name}"
+            detailFragment = DetailSerie().apply {
+                arguments = bundle
+            }
+
+            val toastText = "Clicked on ${serieManager.getSeries()[position!!].name}"
+
             if (currentOrientation == Configuration.ORIENTATION_LANDSCAPE) {
                 Toast.makeText(context, toastText, Toast.LENGTH_SHORT).show()
                 requireActivity().supportFragmentManager.beginTransaction()
-                    .replace(R.id.containerDetail, fragment)
+                    .replace(R.id.containerDetail, detailFragment!!)
                     .addToBackStack(null)
                     .commit()
-
 
             } else {
                 val snackbar = Snackbar.make(binding.root, toastText, Snackbar.LENGTH_LONG)
                 snackbar.setAction("Ver detalles") {
                     requireActivity().supportFragmentManager.beginTransaction()
-                        .replace(R.id.containerList, fragment)
-                        .addToBackStack(null)
-                        .commit()
+                        .replace(R.id.containerList, detailFragment!!).addToBackStack(null).commit()
                 }
                 snackbar.show()
             }
@@ -59,10 +63,17 @@ class ListSerie : Fragment() {
         }
     }
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putInt("position", currentPosition)
+    override fun onSaveInstanceState(bundle: Bundle) {
+        super.onSaveInstanceState(bundle)
+        bundle.putInt(ARG_POSITION, position ?: 0)
+
+        Log.d(
+            "Bundle Value",
+            "La posicion guardad en el bundle de ListSerie es: " + bundle.getInt("position")
+                .toString()
+        )
     }
+
 
 
     // Función auxiliar que devuelve la posición de una serie dentro del array de series
@@ -72,8 +83,7 @@ class ListSerie : Fragment() {
 
     // Función que se encarga de inflar la vista del fragmento y configurar el RecyclerView
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         // Inflar el diseño del fragmento usando ViewBinding
         binding = SerieListBinding.inflate(inflater, container, false)
@@ -87,14 +97,17 @@ class ListSerie : Fragment() {
         serieAdapter = SerieAdapter(serieManager.getSeries(), listener)
         recyclerView.adapter = serieAdapter
 
-        // Verificar si hay un valor guardado en el bundle y configurar la posición actual si se encuentra
-        if (savedInstanceState != null) {
-            currentPosition = savedInstanceState.getInt("position", -1)
-        }
-
         // Devolver la vista inflada
         return binding.root
     }
 
-
+    override fun onDetach() {
+        super.onDetach()
+        bundle = null
+        detailFragment = null
+        Log.d(
+            "Bundle Value",
+            "al cambiar de orientation el Bundle de ListSerie es: " + bundle.toString()
+        )
+    }
 }
