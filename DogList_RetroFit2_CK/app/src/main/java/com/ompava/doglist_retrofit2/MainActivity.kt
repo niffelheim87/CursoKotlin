@@ -3,6 +3,7 @@ package com.ompava.doglist_retrofit2
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -78,6 +79,7 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
                     // Mostramos un mensaje de error si la llamada no fue exitosa
                     showError()
                 }
+                hideKeyboard()
             }
 
         }
@@ -100,5 +102,13 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
     // Función para ejecutar una búsqueda en tiempo real mientras el usuario escribe en el campo de búsqueda
     override fun onQueryTextChange(newText: String?): Boolean {
         return true
+    }
+
+    // Función para ocultar el teclado suavemente
+    private fun hideKeyboard() {
+        // Obtener el servicio de InputMethodManager
+        val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+        // Ocultar el teclado pasando el token de la ventana actual y una bandera de cierre suave
+        imm.hideSoftInputFromWindow(binding.viewRoot.windowToken, 0)
     }
 }
