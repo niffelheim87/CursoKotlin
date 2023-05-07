@@ -27,7 +27,7 @@ class ListSerie : Fragment() {
     var detailFragment: DetailSerie? = null
 
     // Definimos un listener que se encargará de manejar el evento onItemClick del adapter
-    val listener = object : OnItemClickListener {
+    private val listener = object : OnItemClickListener {
         override fun onItemClick(serie: Serie) {
             // Obtenemos la posición de la serie que se ha pulsado y mostramos un Toast
             position = getPosition(serie)
@@ -103,6 +103,7 @@ class ListSerie : Fragment() {
 
     override fun onDetach() {
         super.onDetach()
+        onSaveInstanceState(bundle!!)
         bundle = null
         detailFragment = null
         Log.d(

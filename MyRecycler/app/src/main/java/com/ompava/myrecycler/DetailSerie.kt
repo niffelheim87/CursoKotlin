@@ -22,7 +22,8 @@ class DetailSerie : Fragment() {
         serieManager = SerieManager(requireContext())
 
         if (savedInstanceState != null) {
-            Log.d("Bundle Value", "Valor tomado por SavedInstanceState en DetailsSerie: "+savedInstanceState?.getInt("position").toString())
+            Log.d("Bundle Value", "Valor tomado por SavedInstanceState en DetailsSerie: "+ savedInstanceState.getInt("position")
+                .toString())
             position = savedInstanceState.getInt("position", -1)
         }  else {
             arguments?.let {
@@ -36,9 +37,10 @@ class DetailSerie : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         if (savedInstanceState != null) {
-            Log.d("Bundle Value", "Valor tomado por SavedInstanceState en DetailsSerie: "+savedInstanceState?.getInt("position").toString())
+            Log.d("Bundle Value", "Valor tomado por SavedInstanceState en DetailsSerie: "+ savedInstanceState.getInt("position")
+                .toString())
             position = savedInstanceState.getInt("position", -1)
         }
 
