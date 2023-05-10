@@ -21,34 +21,35 @@ class DetailSerie : Fragment() {
         super.onCreate(savedInstanceState)
         serieManager = SerieManager(requireContext())
 
-        if (savedInstanceState != null) {
-            Log.d("Bundle Value", "Valor tomado por SavedInstanceState en DetailsSerie: "+savedInstanceState?.getInt("position").toString())
-            position = savedInstanceState.getInt("position", -1)
-        }  else {
-            arguments?.let {
-                position = it.getInt("position", -1)
-            }
-        }
+        position =
+            arguments?.getInt("position", 0) ?: 0
 
-        Log.d("Bundle Value", "Valor tomado por arguments en DetailsSerie: "+arguments?.getInt("position").toString())
+
+        Log.d(
+            "Bundle Value",
+            "Valor tomado por arguments en DetailsSerie: " + arguments?.getInt("position")
+                .toString()
+        )
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         if (savedInstanceState != null) {
-            Log.d("Bundle Value", "Valor tomado por SavedInstanceState en DetailsSerie: "+savedInstanceState?.getInt("position").toString())
+            Log.d(
+                "Bundle Value",
+                "Valor tomado por SavedInstanceState en DetailsSerie: " + savedInstanceState.getInt(
+                    "position"
+                )
+                    .toString()
+            )
             position = savedInstanceState.getInt("position", -1)
         }
 
         // Inflate the layout for this fragment
         binding = SerieDetailBinding.inflate(inflater, container, false)
-
-        // Usar el índice de posición para bindear las vistas correspondientes
-        if (position == -1) {
-            position = savedInstanceState?.getInt("position", 0) ?: arguments?.getInt("position", 0) ?: 0
-        }
+        
         val serie = serieManager.getSeries()[position]
         binding.tvName.text = serie.name
         binding.tvDescription.text = serie.summary
@@ -59,6 +60,16 @@ class DetailSerie : Fragment() {
     override fun onSaveInstanceState(savedInstanceState: Bundle) {
         super.onSaveInstanceState(savedInstanceState)
         savedInstanceState.putInt(ARG_POSITION, position)
+    }
+
+    companion object {
+        @JvmStatic
+        fun newInstance(position: Int) =
+            DetailSerie().apply {
+                arguments = Bundle().apply {
+                    putInt(ARG_POSITION, position)
+                }
+            }
     }
 
 }

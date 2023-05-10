@@ -22,12 +22,10 @@ class SerieManager(context: Context) {
         SerieList = gson.fromJson(json, listType)
     }
 
-    fun getSerieById(mId: Int?): Serie {
-        val serie = getSeries().filter { serie ->
+    fun getSerieById(mId: Int?): Serie? {
+        return SerieList.firstOrNull { serie ->
             serie.id == mId
         }
-
-        return SerieList[0]
     }
 
     fun getSeries(): List<Serie> {
