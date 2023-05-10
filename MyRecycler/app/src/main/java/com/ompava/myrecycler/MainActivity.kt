@@ -13,11 +13,11 @@ class MainActivity : AppCompatActivity() {
             ActivityMainBinding.inflate(layoutInflater) // Infla el diseño ActivityMainBinding.
         setContentView(binding.root) // Establece la vista raíz del diseño como la vista de contenido de la actividad.
 
-        val listSerieFragment = ListSerie() // Crea una instancia del fragmento ListSerie.
+
         supportFragmentManager.beginTransaction().apply { // Inicia una transacción de fragmento.
             replace(
                 R.id.containerList,
-                listSerieFragment
+                ListSerie.newInstance(1)
             ) // Reemplaza el contenido del contenedor de fragmentos "containerList" con el fragmento ListSerie.
             if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) { // Verifica si la orientación de la pantalla es horizontal.
                 val detailsSerieFragment =
@@ -30,6 +30,8 @@ class MainActivity : AppCompatActivity() {
             commit() // Confirma la transacción de fragmento.
         }
     }
+
+
 }
 
 
