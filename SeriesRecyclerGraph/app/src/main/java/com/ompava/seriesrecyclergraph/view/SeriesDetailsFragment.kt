@@ -1,7 +1,6 @@
 package com.ompava.seriesrecyclergraph.view
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,59 +10,52 @@ import com.ompava.seriesrecyclergraph.model.Serie
 
 private const val ARG_POSITION = "position"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [SeriesDetailsFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class SeriesDetailsFragment : Fragment() {
-    // TODO: Rename and change types of parameters
+
     private var position: Int = -1
     private lateinit var binding: FragmentSeriesDetailsBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            position = it.getInt(ARG_POSITION, -1)
+            position = it.getInt(ARG_POSITION, -1) // Obtiene la posición del argumento
         }
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
-        // Inflate the layout for this fragment
+        // Infla el diseño del fragmento
         binding = FragmentSeriesDetailsBinding.inflate(inflater, container, false)
         if (position == -1) {
-            position = savedInstanceState?.getInt("position", 0) ?: arguments?.getInt("position", 0) ?: 0
-        }
-        val serie = Serie.getSeries(requireContext())[position]
+            // Verifica si la posición es -1, si es así, intenta obtenerla del estado guardado o de los argumentos
+            position =
+                savedInstanceState?.getInt("position", 0) ?: arguments?.getInt("position", 0) ?: 0
+            // Si no se encuentra la posición en el estado guardado o los argumentos, se establece en 0 por defecto
 
+        }
+        val serie = Serie.getSeries(requireContext())[position]  // Obtiene la serie correspondiente a la posición
+
+        // Configura los datos de la serie en las vistas correspondientes
         binding.tvName.text = serie.name
         binding.tvDescription.text = serie.summary
+        val context = binding.root.context
+        val imageName = serie.image.substringBeforeLast(".")
+        val id = context.resources.getIdentifier(imageName, "drawable", context.packageName)
+        binding.ivImage.setImageResource(id)
 
 
-        return binding.root
+        return binding.root     // Retorna la vista raíz del fragmento
     }
-    
 
 
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment SeriesDetailsFragment.
-         */
-        // TODO: Rename and change types and number of parameters
+
         @JvmStatic
-        fun newInstance(position: Int) =
-            SeriesDetailsFragment().apply {
-                arguments = Bundle().apply {
-                    putInt(ARG_POSITION, position)
-                }
+        fun newInstance(position: Int) = SeriesDetailsFragment().apply {
+            arguments = Bundle().apply {
+                putInt(ARG_POSITION, position)    // Establece la posición en los argumentos
             }
+        }
     }
 }

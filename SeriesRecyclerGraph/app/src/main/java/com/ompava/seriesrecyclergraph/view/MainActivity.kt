@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
-import androidx.fragment.app.Fragment
 import com.google.android.material.snackbar.Snackbar
 import com.ompava.seriesrecyclergraph.OnItemClick
 import com.ompava.seriesrecyclergraph.R
@@ -15,58 +14,75 @@ import com.ompava.seriesrecyclergraph.model.Serie
 class MainActivity : AppCompatActivity(), OnItemClick {
 
     private lateinit var binding: ActivityMainBinding
-    var currentPosition = 0
+    private var currentPosition = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // Infla el diseño de la actividad y lo establece como el contenido de la actividad
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        currentPosition = savedInstanceState?.getInt("position") ?: 0
+        // Recupera la posición guardada del Bundle de guardado de instancia
+        currentPosition = savedInstanceState?.getInt("position", 0) ?: 0
 
-        loadRecyclerView()
+        // Carga los Fragments necesarios
+        loadFragments()
 
     }
 
-    fun isLandScape(): Boolean {
+    // Verifica si la orientación actual del dispositivo es apaisada (landscape)
+    private fun isLandscape(): Boolean {
         return resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
     }
 
-    private fun loadRecyclerView() {
+    // Carga el fragmento de la lista en el contenedor correspondiente
+    private fun loadFragments() {
         loadListFragment()
-        if (isLandScape()) {
+
+        // Si la orientación es apaisada, carga el fragmento de detalle
+        if (isLandscape()) {
             loadDetailFragment(currentPosition)
         }
     }
 
+    // Carga el fragmento de la lista en el contenedor
     private fun loadListFragment() {
-        val seriesListFragment = SeriesListFragment.newInstance(currentPosition)
+        val containerId = R.id.containerList
+        val seriesListFragment = SeriesListFragment.newInstance(1)
         seriesListFragment.listener = this
         supportFragmentManager.beginTransaction()
-            .replace(R.id.containerList, SeriesListFragment.newInstance(currentPosition))
-            .addToBackStack(null).commit()
+            .replace(containerId, seriesListFragment)
+            .addToBackStack(null)
+            .commit()
     }
 
+    // Carga el fragmento de detalle en el contenedor correspondiente
     private fun loadDetailFragment(position: Int) {
-        val id = if (isLandScape()) R.id.containerDetail else R.id.containerList
-
+        val containerId = if (isLandscape()) R.id.containerDetail else R.id.containerList
+        val seriesDetailsFragment = SeriesDetailsFragment.newInstance(position)
         supportFragmentManager.beginTransaction()
-            .replace(id, SeriesDetailsFragment.newInstance(position)).addToBackStack(null).commit()
+            .replace(containerId, seriesDetailsFragment)
+            .addToBackStack(null)
+            .commit()
     }
 
+    // Guarda el estado actual de la posición en el Bundle de guardado de instancia
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putInt("position", currentPosition)
     }
 
+    // Maneja el evento de clic en un elemento de la lista
     override fun onItemClick(serie: Serie, position: Int) {
-        Log.d("click", "Has clicado en ${serie.name}")
         currentPosition = position
         val toastText = "Clicked on ${serie.name}"
-        if (isLandScape()) {
+
+        // Si la orientación es apaisada, muestra un Toast
+        if (isLandscape()) {
             Toast.makeText(this, toastText, Toast.LENGTH_SHORT).show()
             loadDetailFragment(position)
-        } else {
+        } else {   // Si no, muestra un Snackbar con una acción para cargar el fragmento de detalle
             val snackbar = Snackbar.make(binding.root, "", Snackbar.LENGTH_LONG)
             snackbar.setAction("Ver detalles de ${serie.name}") {
                 loadDetailFragment(position)
