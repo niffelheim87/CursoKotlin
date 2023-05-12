@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.ompava.seriesrecyclergraph.databinding.SerieItemBinding
@@ -52,6 +53,12 @@ class SerieAdapter(private val series: List<Serie>, private val listener: OnItem
             val imageName = serie.image.substringBeforeLast(".")
             val id = context.resources.getIdentifier(imageName, "drawable", context.packageName)
             binding.ivImage.setImageResource(id)
+
+            if (serie.status == "Ended"){
+                binding.root.setBackgroundColor(ContextCompat.getColor(context, R.color.ended))
+            } else {
+                binding.root.setBackgroundColor(ContextCompat.getColor(context, R.color.running))
+            }
 
             // Establecer un listener en la vista raíz del binding para detectar cuando el usuario haga clic en el elemento del RecyclerView
             binding.root.setOnClickListener { listener.onItemClick(serie, position) }

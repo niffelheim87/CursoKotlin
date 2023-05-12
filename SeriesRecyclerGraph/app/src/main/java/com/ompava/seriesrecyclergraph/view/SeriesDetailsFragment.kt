@@ -4,7 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import com.ompava.seriesrecyclergraph.R
 import com.ompava.seriesrecyclergraph.databinding.FragmentSeriesDetailsBinding
 import com.ompava.seriesrecyclergraph.model.Serie
 
@@ -27,14 +29,16 @@ class SeriesDetailsFragment : Fragment() {
     ): View {
         // Infla el diseño del fragmento
         binding = FragmentSeriesDetailsBinding.inflate(inflater, container, false)
-        if (position == -1) {
-            // Verifica si la posición es -1, si es así, intenta obtenerla del estado guardado o de los argumentos
-            position =
-                savedInstanceState?.getInt("position", 0) ?: arguments?.getInt("position", 0) ?: 0
-            // Si no se encuentra la posición en el estado guardado o los argumentos, se establece en 0 por defecto
 
-        }
-        val serie = Serie.getSeries(requireContext())[position]  // Obtiene la serie correspondiente a la posición
+
+        // obteniene la posicion del estado guardado o de los argumentos
+        position =
+            savedInstanceState?.getInt("position", 0) ?: arguments?.getInt("position", 0) ?: 0
+        // Si no se encuentra la posición en el estado guardado o los argumentos, se establece en 0 por defecto
+
+
+        val serie =
+            Serie.getSeries(requireContext())[position]  // Obtiene la serie correspondiente a la posición
 
         // Configura los datos de la serie en las vistas correspondientes
         binding.tvName.text = serie.name
@@ -43,6 +47,8 @@ class SeriesDetailsFragment : Fragment() {
         val imageName = serie.image.substringBeforeLast(".")
         val id = context.resources.getIdentifier(imageName, "drawable", context.packageName)
         binding.ivImage.setImageResource(id)
+
+
 
 
         return binding.root     // Retorna la vista raíz del fragmento

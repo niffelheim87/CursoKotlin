@@ -3,8 +3,10 @@ package com.ompava.seriesrecyclergraph.view
 import android.content.res.Configuration
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.DisplayMetrics
 import android.util.Log
 import android.widget.Toast
+import androidx.core.content.ContentProviderCompat.requireContext
 import com.google.android.material.snackbar.Snackbar
 import com.ompava.seriesrecyclergraph.OnItemClick
 import com.ompava.seriesrecyclergraph.R
@@ -27,13 +29,26 @@ class MainActivity : AppCompatActivity(), OnItemClick {
         currentPosition = savedInstanceState?.getInt("position", 0) ?: 0
 
         // Carga los Fragments necesarios
+
         loadFragments()
+
 
     }
 
     // Verifica si la orientación actual del dispositivo es apaisada (landscape)
     private fun isLandscape(): Boolean {
         return resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
+    }
+
+    private fun isTablet(): Boolean {
+
+        if (resources.getBoolean(R.bool.isTablet)) {
+            return true
+        } else {
+            return false
+        }
+
+
     }
 
     // Carga el fragmento de la lista en el contenedor correspondiente
