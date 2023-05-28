@@ -37,7 +37,8 @@ class MainActivity : AppCompatActivity(), OnItemClick {
 
     // Verifica si la orientación actual del dispositivo es apaisada (landscape)
     private fun isLandscape(): Boolean {
-        return resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
+        //return resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
+        return binding.containerDetail != null
     }
 
     private fun isTablet(): Boolean {
