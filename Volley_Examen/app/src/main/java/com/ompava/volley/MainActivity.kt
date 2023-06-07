@@ -29,21 +29,23 @@ class MainActivity : AppCompatActivity() {
 
     private fun searchByNumber(user: Int) {
         MainScope().launch {
-            val userData = Provider.getUserData(binding.root.context, user)
+            Provider.getUserData(binding.root.context, user){
+                if (it != null) {
 
-            if (userData != null) {
-
-                // Hacer algo con los datos del usuario
-                binding.tvUserName.text = "Nombre: ${userData.first_name} ${userData.last_name}"
-                binding.tvUserMail.text = "Email: ${userData.email}"
-                Glide.with(applicationContext).load(userData.avatar)//Imagen que vamos a cargar
-                    .fitCenter() // Si la imagen es más pequeña se muestra en su tamaño original
-                    .dontAnimate() //Evita animaciones
-                    .into(binding.ivUserImage)//ImageView
-                println("Avatar: ${userData.avatar}")
-            } else {
-                showError()
+                    // Hacer algo con los datos del usuario
+                    binding.tvUserName.text = "Nombre: ${it.first_name} ${it.last_name}"
+                    binding.tvUserMail.text = "Email: ${it.email}"
+                    Glide.with(applicationContext).load(it.avatar)//Imagen que vamos a cargar
+                        .fitCenter() // Si la imagen es más pequeña se muestra en su tamaño original
+                        .dontAnimate() //Evita animaciones
+                        .into(binding.ivUserImage)//ImageView
+                    println("Avatar: ${it.avatar}")
+                } else {
+                    showError()
+                }
             }
+
+
         }
     }
 

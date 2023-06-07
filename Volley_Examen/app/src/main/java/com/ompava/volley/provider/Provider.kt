@@ -15,7 +15,7 @@ const val BASE_URL = "https://reqres.in"
 
 object Provider {
 
-    suspend fun getUserData(context: Context, user: Int): UserData? = withContext(Dispatchers.IO) {
+    suspend fun getUserData(context: Context, user: Int, onLoad:(userData:UserData?)->Unit): UserData? = withContext(Dispatchers.IO) {
         val url = "$BASE_URL/api/users/$user"
         var userData: UserData? = null
 
@@ -27,10 +27,12 @@ object Provider {
                 val userResponse = Gson().fromJson(response.toString(), UserResponse::class.java)
                 userData = userResponse.data
                 Log.d("VOLLEY", "EXITO")
+                onLoad(userData)
             },
             { error ->
                 println("Error: ${error.message}")
                 Log.d("VOLLEY", "ERROR")
+                onLoad(userData)
             }
         )
 
