@@ -59,7 +59,9 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
         // Iniciamos una tarea en segundo plano para obtener las imágenes de los perros de la API
         CoroutineScope(Dispatchers.IO).launch {
             // Obtenemos las imágenes de los perros que coinciden con la raza proporcionada
-            val call : Response<DogResponse> = getRetrofit().create(APIService::class.java).getDogsByBreeds("$query/images")
+            //val call : Response<DogResponse> = getRetrofit().create(APIService::class.java).getDogsByBreeds("$query/images")
+            val call : Response<DogResponse> = getRetrofit().create(APIService::class.java).getDogsByBreeds(query)
+
             // Obtenemos el cuerpo de la respuesta y lo almacenamos en un objeto DogResponse
             val puppies:DogResponse? = call.body()
             // Actualizamos la interfaz de usuario con las imágenes de los perros obtenidos
